@@ -90,6 +90,7 @@ textarea{min-height:110px;resize:vertical}
 .req{color:#B0243F}
 .bad{border-color:#B0243F!important;box-shadow:0 0 0 2px #F3D6DC}
 .msg.err{color:#B0243F}
+.hint{color:#B0243F;font-size:15px;font-weight:600;margin-top:4px}
 .ok{display:none;text-align:center;padding:60px 10px}
 .ok h2{text-align:center}
 .ok p{text-align:center}
@@ -221,8 +222,8 @@ f.addEventListener('submit',async e=>{
   const msg=document.getElementById('msg'),btn=document.getElementById('send');
   // obligatorii: numele, data, emailul — la Trimite le spunem ce lipsește (26 nov)
   const need=[['miri','numele vostru'],['data','data nunții'],['em','emailul vostru']];
-  const miss=[];document.querySelectorAll('.bad').forEach(x=>x.classList.remove('bad'));
-  need.forEach(([id,lab])=>{const el=document.getElementById(id);const v=el.value.trim();const ok=id==='em'?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v):!!v;if(!ok){miss.push(lab);el.classList.add('bad')}});
+  const miss=[];document.querySelectorAll('.bad').forEach(x=>x.classList.remove('bad'));document.querySelectorAll('.hint').forEach(x=>x.remove());
+  need.forEach(([id,lab])=>{const el=document.getElementById(id);const v=el.value.trim();const ok=id==='em'?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v):!!v;if(!ok){miss.push(lab);el.classList.add('bad');const h=document.createElement('div');h.className='hint';h.textContent=id==='em'&&v?'Emailul nu pare corect.':'Nu ați completat '+lab+'.';(id==='data'?el.parentElement:el).after(h)}});
   if(miss.length){msg.className='msg err';msg.textContent='Nu ați completat: '+miss.join(', ')+'. Vă rugăm să completați, apoi apăsați din nou „Trimite playlistul”.';const first=document.querySelector('.bad');first.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>first.focus({preventScroll:true}),500);return}
   msg.className='msg';
   const data={};new FormData(f).forEach((v,k)=>{if(String(v).trim())data[k]=v});
