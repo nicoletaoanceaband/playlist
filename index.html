@@ -311,34 +311,41 @@ f.addEventListener('submit',async e=>{
   }catch(err){btn.disabled=false;msg.textContent='Nu s-a putut trimite. Verificați internetul și încercați din nou.'}
 });
 
-// ===== player: pornire instant — playerele pieselor de pe ecran se pregătesc din timp (pe mut), maxim 8 odată (26 nov)
+// ===== player: pornire instant (26–27 nov)
+// - un player principal (mereu gata): orice piesă pornește din el la apăsare, cu sunet
+// - plus maxim 6 playere „încălzite” pentru piesele de pe ecran → acelea pornesc instant
 const PLAY_I='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>',PAUSE_I='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>';
 const $p=id=>document.getElementById(id),fmt=x=>{x=Math.max(0,Math.floor(x||0));return Math.floor(x/60)+':'+String(x%60).padStart(2,'0')};
-const PL=new Map(),MAXP=10;let ytReady=false,curP=null,curB=null,drag=false,queue=[];
-function mk(id){if(PL.has(id))return PL.get(id);
-  if(PL.size>=MAXP){for(const [k,o] of PL){if(o!==curP&&!o.vis){try{o.p.destroy()}catch(e){}o.slot.remove();PL.delete(k);break}}}
-  const slot=document.createElement('div');slot.className='slot';const d=document.createElement('div');slot.appendChild(d);$p('vids').appendChild(slot);
-  const o={id,slot,ready:false,warm:false,want:false,vis:true};PL.set(id,o);
+const PL=new Map(),MAXP=6,VIS=new Set();let ytReady=false,curP=null,curB=null,drag=false,mainP=null,pendingB=null;
+function slotFor(){const slot=document.createElement('div');slot.className='slot';const d=document.createElement('div');slot.appendChild(d);$p('vids').appendChild(slot);return [slot,d]}
+function stateCb(o){return e=>{if(o===curP){$p('pp').innerHTML=e.data===1?PAUSE_I:PLAY_I;if(e.data===1&&curB)$p('pa').textContent=curB.dataset.a}}}
+function mkMain(){const [slot,d]=slotFor();const o={id:null,slot,ready:false,main:true};
+  o.p=new YT.Player(d,{width:96,height:54,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},
+    events:{onReady:()=>{o.ready=true;if(pendingB){const b=pendingB;pendingB=null;playB(b)}},onStateChange:stateCb(o)}});return o}
+function warm(id){if(PL.has(id)||PL.size>=MAXP&&!evict())return;const [slot,d]=slotFor();const o={id,slot,ready:false,warm:false};PL.set(id,o);
+  const sc=stateCb(o);
   o.p=new YT.Player(d,{width:96,height:54,videoId:id,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},
     events:{onReady:()=>{o.ready=true;o.p.mute();o.p.playVideo()},
-      onStateChange:e=>{if(e.data===1&&!o.warm){o.warm=true;if(!o.want){o.p.pauseVideo();o.p.seekTo(0,true)}o.p.unMute()}
-        if(e.data===1&&o.want&&o.p.isMuted())o.p.unMute();
-        if(o===curP){$p('pp').innerHTML=e.data===1?PAUSE_I:PLAY_I;if(e.data===1&&curB)$p('pa').textContent=curB.dataset.a}}}});
-  return o}
-function onYouTubeIframeAPIReady(){ytReady=true;queue.forEach(id=>mk(id));queue=[];
-  const io=new IntersectionObserver(es=>es.forEach(en=>{const id=en.target.dataset.v;if(en.isIntersecting){const o=mk(id);o.vis=true}else if(PL.has(id))PL.get(id).vis=false}),{rootMargin:'120px 0px'});
+      onStateChange:e=>{if(e.data===1&&!o.warm){o.warm=true;if(o!==curP){o.p.pauseVideo();o.p.seekTo(0,true)}o.p.unMute()}sc(e)}}})}
+function evict(){for(const [k,o] of PL){if(o!==curP&&!VIS.has(k)){try{o.p.destroy()}catch(e){}o.slot.remove();PL.delete(k);return true}}return false}
+function onYouTubeIframeAPIReady(){ytReady=true;mainP=mkMain();
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{const id=en.target.dataset.v;if(en.isIntersecting)VIS.add(id);else VIS.delete(id)});
+    clearTimeout(window.__wt);window.__wt=setTimeout(()=>{[...VIS].slice(0,MAXP).forEach(warm)},400)},{rootMargin:'0px'});
   document.querySelectorAll('.play').forEach(b=>io.observe(b))}
+function show(o){[...PL.values(),mainP].forEach(x=>x&&x.slot.classList.toggle('on',x===o))}
 function playB(b){const id=b.dataset.v;
-  if(curP&&curP.id!==id){try{curP.p.pauseVideo()}catch(e){}curP.slot.classList.remove('on')}
+  if(curP){try{curP.p.pauseVideo()}catch(e){}}
   if(curB)curB.classList.remove('on');curB=b;b.classList.add('on');
   $p('pt').textContent=b.dataset.t;$p('pa').textContent='Se încarcă…';$p('pl').classList.add('on');document.body.classList.add('plon');
-  if(!ytReady){queue.push(id);return}
-  const o=mk(id);curP=o;o.slot.classList.add('on');o.want=true;if(o.ready){o.p.unMute();o.p.playVideo()}}
+  if(!ytReady||!mainP||!mainP.ready){pendingB=b;return}
+  const w=PL.get(id);
+  if(w&&w.ready&&w.warm){curP=w;show(w);w.p.unMute();w.p.playVideo();return}
+  curP=mainP;show(mainP);if(mainP.id!==id){mainP.id=id;mainP.p.loadVideoById(id)}else mainP.p.playVideo()}
 document.querySelectorAll('.play').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();playB(b)}));
 $p('pp').onclick=()=>{if(!curP||!curP.ready)return;curP.p.getPlayerState()===1?curP.p.pauseVideo():curP.p.playVideo()};
 $p('bk').onclick=()=>{if(curP&&curP.ready)curP.p.seekTo(Math.max(0,curP.p.getCurrentTime()-30),true)};
 $p('fw').onclick=()=>{if(curP&&curP.ready)curP.p.seekTo(Math.min(curP.p.getDuration()||0,curP.p.getCurrentTime()+30),true)};
-$p('cx').onclick=()=>{if(curP){try{curP.p.pauseVideo()}catch(e){}curP.slot.classList.remove('on');curP.want=false}if(curB)curB.classList.remove('on');curP=null;curB=null;$p('pl').classList.remove('on');document.body.classList.remove('plon')};
+$p('cx').onclick=()=>{if(curP){try{curP.p.pauseVideo()}catch(e){}curP.slot.classList.remove('on')}if(curB)curB.classList.remove('on');curP=null;curB=null;$p('pl').classList.remove('on');document.body.classList.remove('plon')};
 $p('sk').oninput=()=>{drag=true;$p('cur').textContent=fmt($p('sk').value);$p('sk').style.setProperty('--p',(+$p('sk').value/(+$p('sk').max||1)*100)+'%')};
 $p('sk').onchange=()=>{if(curP&&curP.ready)curP.p.seekTo(+$p('sk').value,true);drag=false};
 setInterval(()=>{if(!curP||!curP.ready||!$p('pl').classList.contains('on'))return;const d=curP.p.getDuration()||0,c=curP.p.getCurrentTime()||0;$p('sk').max=Math.floor(d);if(!drag){$p('sk').value=Math.floor(c);$p('cur').textContent=fmt(c)}$p('dur').textContent=fmt(d);$p('sk').style.setProperty('--p',(d?Math.min(100,(+$p('sk').value)/d*100):0)+'%')},250);
