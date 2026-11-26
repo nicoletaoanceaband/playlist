@@ -2,18 +2,27 @@
 <html lang="ro">
 <head>
 <meta charset="utf-8">
+<script>try{var h=new Date().getHours();if(h>=20||h<7)document.documentElement.classList.add('night')}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Playlistul nunții voastre – Nicoleta Oancea & Band</title>
 <meta name="description" content="Alegeți piesele pentru nunta voastră.">
 <meta property="og:title" content="Playlistul nunții voastre">
 <meta property="og:description" content="Nicoleta Oancea & Band">
-<meta property="og:image" content="logo.png">
+<meta property="og:image" content="https://nicoletaoanceaband.github.io/playlist/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nicoletaoanceaband.github.io/playlist/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#FBF7F0;--card:#FFFDF9;--gold:#B8955A;--ink:#141210;--muted:#8A7F72;--line:#E6DCCB;--green:#2F5D4E;--col:60px}
+:root{--cream:#FBF7F0;--card:#FFFDF9;--gold:#B8955A;--ink:#141210;--muted:#8A7F72;--line:#E6DCCB;--green:#2F5D4E;--wine:#B0243F;--g1:#FAF0E0;--g2:#EFEDEA;--ph:#b3a999;--sep:#F1EADF;--col:60px}
+/* modul de noapte: seara (20:00–07:00) pagina trece singură pe închis (26 nov) */
+html.night{--cream:#1B1815;--card:#24201C;--gold:#CFAE72;--ink:#EFE8DC;--muted:#A99E8E;--line:#3B342C;--green:#7FB59F;--wine:#E0607A;--g1:#2E271C;--g2:#2A2927;--ph:#7d7366;--sep:#332D27;color-scheme:dark}
+html.night .logo,html.night .end img{filter:brightness(1.15)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:'EB Garamond',Georgia,serif;font-size:18px;line-height:1.45}
@@ -34,15 +43,15 @@ ul.leg li{margin:0 0 6px}
 .end p,.center,p.it,.green{text-align:center}
 p.it,.green,.secsub{text-align:left}
 .own{color:var(--green);font-style:italic}
-b.own{color:#B0243F;font-style:normal}
+b.own{color:var(--wine);font-style:normal}
 /* colajele de hore și sârbe: un singur cadran, liniile coloanelor merg continuu */
-.grp{background:transparent;border-bottom:1px solid var(--line);--gbg:#FAF0E0}
-.grp.alt{--gbg:#EFEDEA}
+.grp{background:transparent;border-bottom:1px solid var(--line);--gbg:var(--g1)}
+.grp.alt{--gbg:var(--g2)}
 .grp .n{background:var(--gbg)}
 .grp:last-child{border-bottom:0}
 .grp .gt{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,var(--col))}
 .grp .gt .n{padding:10px 6px 2px 12px}
-.grp .gt i{border-left:1px solid #F1EADF}
+.grp .gt i{border-left:1px solid var(--sep)}
 .grp .r{border-bottom:0;background:transparent}
 .grp .r.sub .n{padding:4px 6px 10px 22px}
 .grp .r.sub+.r.sub{border-top:1px dashed #E3D5BE}
@@ -50,7 +59,7 @@ b.own{color:#B0243F;font-style:normal}
 .dw .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:22px;height:22px;color:var(--gold);pointer-events:none}
 .dw input[type=date]{padding-left:44px;display:block;min-height:48px;line-height:26px;text-align:left}
 input[type=text],input[type=email]{min-height:48px}
-.dph{position:absolute;left:44px;top:50%;transform:translateY(-50%);color:#b3a999;font-style:italic;font-size:17px;pointer-events:none;display:none}
+.dph{position:absolute;left:44px;top:50%;transform:translateY(-50%);color:var(--ph);font-style:italic;font-size:17px;pointer-events:none;display:none}
 .dw.empty .dph{display:block}
 .dw.empty input[type=date]{color:transparent}
 input[type=date]::-webkit-date-and-time-value{text-align:left}
@@ -62,7 +71,7 @@ input[type=text],input[type=date],input[type=email],textarea{width:100%;font:inh
 input[type=text]:focus,input[type=date]:focus,input[type=email]:focus,textarea:focus{border-color:var(--gold)}
 textarea{min-height:110px;resize:vertical}
 #djp{min-height:340px}
-::placeholder{color:#b3a999;font-style:italic}
+::placeholder{color:var(--ph);font-style:italic}
 /* tabelele: încap pe orice telefon, fără tras stânga-dreapta */
 .secsub{font-style:italic;color:var(--muted);font-size:16px;margin-top:-4px}
 .t{border:1px solid var(--line);border-radius:8px;background:var(--card);overflow:hidden}
@@ -77,13 +86,13 @@ textarea{min-height:110px;resize:vertical}
 .r.r3{grid-template-columns:minmax(0,1fr) repeat(3,calc(var(--col) + 8px))}
 .r:last-child{border-bottom:0}
 .n{padding:9px 6px 9px 12px;font-size:16.5px;line-height:1.3}
-.c{display:flex;justify-content:center;align-items:center;height:100%;min-height:46px;cursor:pointer;border-left:1px solid #F1EADF}
+.c{display:flex;justify-content:center;align-items:center;height:100%;min-height:46px;cursor:pointer;border-left:1px solid var(--sep)}
 .c input{position:absolute;opacity:0;pointer-events:none}
 /* etichetele de deasupra bifelor la colaje */
 .c.l{flex-direction:column;gap:4px}
 .c.l small{font-size:10.5px;font-weight:700;color:var(--gold);line-height:1;white-space:nowrap}
-.c span{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--gold);background:#fff;display:block;transition:all .12s}
-.c input:checked~span{background:var(--gold);box-shadow:inset 0 0 0 4px #fff}
+.c span{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--gold);background:var(--card);display:block;transition:all .12s}
+.c input:checked~span{background:var(--gold);box-shadow:inset 0 0 0 4px var(--card)}
 .c input:focus-visible~span{outline:2px solid var(--ink);outline-offset:2px}
 .chk{display:flex;gap:12px;align-items:flex-start;font-size:18px;cursor:pointer;margin:6px 0 12px}
 .chk input{width:22px;height:22px;accent-color:var(--gold);margin-top:2px;flex:none}
@@ -92,7 +101,7 @@ textarea{min-height:110px;resize:vertical}
 .end{text-align:center}
 .end img{width:min(260px,60%);margin:22px auto 0;display:block}
 .msg{text-align:center;margin-top:16px;font-weight:600}
-.req{color:#B0243F}
+.req{color:var(--wine)}
 .bad{border-color:#B0243F!important;box-shadow:0 0 0 2px #F3D6DC}
 .msg.err{color:#B0243F}
 .hint{color:#B0243F;font-size:15px;font-weight:600;margin-top:4px}
@@ -179,7 +188,7 @@ textarea{min-height:110px;resize:vertical}
 
 <label class="f" for="djp">Piese pe care să le pună DJ-ul în pauzele noastre</label>
 <textarea id="djp" name="Piese DJ în pauzele trupei" placeholder="Scrieți piesele AICI (nume – artist) sau atașați un link de Spotify, YouTube sau altă platformă.&#10;Exemplu:&#10;Pentru primirea invitaților: link&#10;Piese de party: link&#10;Sau:&#10;La primirea invitaților dorim muzică cu instrumentul saxofon.&#10;La servirea mesei dorim muzică pentru socializare.&#10;Oferiți cât mai multe detalii."></textarea>
-<label class="f" for="djnu">Piese pe care să <span style="color:#B0243F">NU</span> le pună DJ-ul sub nicio formă</label>
+<label class="f" for="djnu">Piese pe care să <span style="color:var(--wine)">NU</span> le pună DJ-ul sub nicio formă</label>
 <textarea id="djnu" name="Piese pe care să nu le pună DJ-ul" placeholder="De exemplu: Dansul pinguinului, El Meneaíto, Macarena."></textarea>
 
 <h2>Momentul tortului</h2>
