@@ -140,16 +140,24 @@ body{padding-bottom:170px}
 <div class="ctl"><button class="sk" id="bk" aria-label="Înapoi 30 de secunde">↺ 30</button><button class="bt" id="pp" aria-label="Pauză">⏸</button><button class="sk" id="fw" aria-label="Înainte 30 de secunde">30 ↻</button></div></div>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-let P=null,ready=false,want=null,drag=false,curBtn=null;
+// fără lag: playerul se pregătește dinainte (cue), iar bara apare imediat la apăsare (26 nov)
+let P=null,ready=false,cued=null,pending=null,drag=false,curBtn=null;
 const $=id=>document.getElementById(id),fm=s=>{s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
-function onYouTubeIframeAPIReady(){P=new YT.Player('yt',{width:96,height:54,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},events:{onReady:()=>{ready=true;if(want)load(want)},onStateChange:e=>{$('pp').textContent=e.data===1?'⏸':'▶'}}})}
-function load(b){want=b;if(!ready)return;P.loadVideoById(b.dataset.v);$('pt').textContent=b.dataset.t;$('pa').textContent=b.dataset.a;$('pl').classList.add('on');if(curBtn)curBtn.classList.remove('on');curBtn=b;b.classList.add('on')}
-document.querySelectorAll('.play').forEach(b=>b.onclick=()=>load(b));
+const btns=[...document.querySelectorAll('.play')];
+function onYouTubeIframeAPIReady(){P=new YT.Player('yt',{width:96,height:54,videoId:btns[0].dataset.v,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},events:{onReady:()=>{ready=true;cued=btns[0].dataset.v;if(pending)play(pending)},onStateChange:e=>{$('pp').textContent=e.data===1?'⏸':'▶';if(e.data===1)$('pa').textContent=curBtn?curBtn.dataset.a:''}}})}
+function cue(b){if(ready&&cued!==b.dataset.v){P.cueVideoById(b.dataset.v);cued=b.dataset.v}}
+function play(b){
+  $('pt').textContent=b.dataset.t;$('pa').textContent='Se încarcă…';$('pl').classList.add('on');
+  if(curBtn)curBtn.classList.remove('on');curBtn=b;b.classList.add('on');
+  if(!ready){pending=b;return}
+  if(cued!==b.dataset.v){P.loadVideoById(b.dataset.v);cued=b.dataset.v}else P.playVideo();
+}
+btns.forEach(b=>{b.addEventListener('pointerdown',()=>cue(b));b.addEventListener('mouseenter',()=>cue(b));b.onclick=()=>play(b)});
 $('pp').onclick=()=>{if(!P)return;P.getPlayerState()===1?P.pauseVideo():P.playVideo()};
 $('bk').onclick=()=>{if(P)P.seekTo(Math.max(0,P.getCurrentTime()-30),true)};
 $('fw').onclick=()=>{if(P)P.seekTo(Math.min(P.getDuration()||0,P.getCurrentTime()+30),true)};
-$('cx').onclick=()=>{if(P)P.stopVideo();$('pl').classList.remove('on');if(curBtn)curBtn.classList.remove('on');curBtn=null};
+$('cx').onclick=()=>{if(P)P.pauseVideo();$('pl').classList.remove('on');if(curBtn)curBtn.classList.remove('on');curBtn=null};
 $('sk').oninput=()=>{drag=true;$('cur').textContent=fm($('sk').value)};
 $('sk').onchange=()=>{if(P)P.seekTo(+$('sk').value,true);drag=false};
-setInterval(()=>{if(!P||!ready||!$('pl').classList.contains('on'))return;const d=P.getDuration()||0,c=P.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('dur').textContent=fm(d)},500);
+setInterval(()=>{if(!P||!ready||!$('pl').classList.contains('on'))return;const d=P.getDuration()||0,c=P.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('dur').textContent=fm(d)},300);
 </script></body></html>
