@@ -89,6 +89,7 @@ textarea{min-height:110px;resize:vertical}
 .msg{text-align:center;margin-top:16px;font-weight:600}
 .ok{display:none;text-align:center;padding:60px 10px}
 .ok h2{text-align:center}
+.ok p{text-align:center}
 @media (max-width:420px){:root{--col:48px}body{font-size:17px}.h{font-size:11.5px}.n{font-size:15.5px;padding-left:10px}.c span{width:21px;height:21px}}
 @media (max-width:350px){:root{--col:44px}.h{font-size:11px}}
 </style>
@@ -215,10 +216,11 @@ f.addEventListener('submit',async e=>{
   const msg=document.getElementById('msg'),btn=document.getElementById('send');
   const data={};new FormData(f).forEach((v,k)=>{if(String(v).trim())data[k]=v});
   const order=[...new Set([...f.elements].map(x=>x.name).filter(Boolean))];
+  const sections={};f.querySelectorAll('.sec input[type=radio]').forEach(i=>{sections[i.name]=i.closest('.sec').querySelector('h3').textContent.trim()});
   if(!ENDPOINT){msg.textContent='Pagina de test: trimiterea nu e încă legată.';console.log(data);return}
   btn.disabled=true;msg.textContent='Se trimite…';
   try{
-    await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({data,order,trimis:new Date().toISOString()})});
+    await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({data,order,sections,trimis:new Date().toISOString()})});
     try{localStorage.removeItem(KEY)}catch(e){}
     document.getElementById('form-wrap').style.display='none';document.getElementById('ok').style.display='block';window.scrollTo(0,0);
   }catch(err){btn.disabled=false;msg.textContent='Nu s-a putut trimite. Verificați internetul și încercați din nou.'}
