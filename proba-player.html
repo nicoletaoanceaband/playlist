@@ -1,0 +1,155 @@
+<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Probă player piese</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"><style>
+:root{--cream:#FBF7F0;--card:#FFFDF9;--gold:#B8955A;--ink:#141210;--muted:#8A7F72;--line:#E6DCCB;--green:#2F5D4E;--wine:#B0243F;--g1:#FAF0E0;--g2:#EFEDEA;--ph:#b3a999;--sep:#F1EADF;--col:60px}
+/* modul de noapte: seara (20:00–07:00) pagina trece singură pe închis (26 nov) */
+html.night{--cream:#1B1815;--card:#24201C;--gold:#CFAE72;--ink:#EFE8DC;--muted:#A99E8E;--line:#3B342C;--green:#7FB59F;--wine:#E0607A;--g1:#2E271C;--g2:#2A2927;--ph:#7d7366;--sep:#332D27;color-scheme:dark}
+html.night .logo,html.night .end img{filter:brightness(1.15)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'EB Garamond',Georgia,serif;font-size:18px;line-height:1.45}
+.wrap{max-width:720px;margin:0 auto;padding:28px 16px 60px}
+.logo{display:block;margin:8px auto 18px;width:min(300px,72%);height:auto}
+h1{font-weight:500;font-size:clamp(30px,8vw,42px);text-align:center;margin:0 0 6px;line-height:1.1}
+.subt{text-align:center!important;font-style:italic;color:var(--gold);font-size:22px;margin:2px 0 0;letter-spacing:.04em}
+.line{width:80px;height:1px;background:var(--gold);margin:14px auto 26px}
+h2{color:var(--gold);font-weight:600;font-size:23px;margin:34px 0 10px;line-height:1.2}
+h3{font-weight:600;font-size:20px;margin:26px 0 8px;line-height:1.25}
+h3.gold{color:var(--gold);letter-spacing:.02em}
+.center{text-align:center}
+p{margin:0 0 12px;text-align:justify}
+ul.leg li{text-align:left}
+.lead{text-align:center;font-style:italic;font-size:21px;color:var(--gold);font-weight:600;margin-bottom:8px}
+ul.leg{list-style:none;padding:0;margin:0 0 10px}
+ul.leg li{margin:0 0 6px}
+.note{border:1px solid var(--gold);background:var(--card);padding:14px 16px;border-radius:6px;text-align:center;font-weight:700;margin:20px 0}
+.end p,.center,p.it,.green{text-align:center}
+p.it,.green,.secsub{text-align:left}
+.own{color:var(--green);font-style:italic}
+b.own{color:var(--wine);font-style:normal}
+/* colajele de hore și sârbe: un singur cadran, liniile coloanelor merg continuu */
+.grp{background:transparent;border-bottom:1px solid var(--line);--gbg:var(--g1)}
+.grp.alt{--gbg:var(--g2)}
+.grp .n{background:var(--gbg)}
+.grp:last-child{border-bottom:0}
+.grp .gt{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,var(--col))}
+.grp .gt .n{padding:10px 6px 2px 12px}
+.grp .gt i{border-left:1px solid var(--sep)}
+.grp .r{border-bottom:0;background:transparent}
+.grp .r.sub .n{padding:4px 6px 10px 12px}
+.grp .r.sub+.r.sub{border-top:1px dashed #E3D5BE}
+.dw{position:relative}
+.dw .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:22px;height:22px;color:var(--gold);pointer-events:none}
+.dw input[type=date]{padding-left:44px;display:block;min-height:48px;line-height:26px;text-align:left}
+input[type=text],input[type=email]{min-height:48px}
+.dph{position:absolute;left:44px;top:50%;transform:translateY(-50%);color:var(--ph);font-style:italic;font-size:17px;pointer-events:none;display:none}
+.dw.empty .dph{display:block}
+.dw.empty input[type=date]{color:transparent}
+input[type=date]::-webkit-date-and-time-value{text-align:left}
+input[type=date]::-webkit-calendar-picker-indicator{opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer}
+.it{font-style:italic;color:var(--muted)}
+.green{color:var(--green);font-weight:700;font-style:italic}
+label.f{display:block;font-weight:600;font-size:19px;margin:20px 0 6px}
+input[type=text],input[type=date],input[type=email],textarea{width:100%;font:inherit;font-size:17px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;outline:none;-webkit-appearance:none;appearance:none}
+input[type=text]:focus,input[type=date]:focus,input[type=email]:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:110px;resize:vertical}
+#djp{min-height:340px}
+::placeholder{color:var(--ph);font-style:italic}
+/* tabelele: încap pe orice telefon, fără tras stânga-dreapta */
+.secsub{font-style:italic;color:var(--muted);font-size:16px;margin-top:-4px}
+.t{border:1px solid var(--line);border-radius:8px;background:var(--card);overflow:hidden}
+.h,.r{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,var(--col));align-items:center}
+.h{position:sticky;top:0;z-index:2;background:var(--cream);border-bottom:1px solid var(--line);font-weight:700;font-size:13px;color:var(--gold);text-align:center;padding:8px 0;line-height:1.1}
+.h div{padding:0 1px}
+.r{border-bottom:1px solid var(--line);min-height:46px}
+.t.tort .r{min-height:62px}
+.t.tort .n{font-size:18px}
+.t.tort .c span{width:30px;height:30px}
+.t.tort .c small{font-size:12px}
+.r.r3{grid-template-columns:minmax(0,1fr) repeat(3,calc(var(--col) + 8px))}
+.r:last-child{border-bottom:0}
+.n{padding:9px 6px 9px 12px;font-size:16.5px;line-height:1.3}
+.c{display:flex;justify-content:center;align-items:center;height:100%;min-height:46px;cursor:pointer;border-left:1px solid var(--sep)}
+.c input{position:absolute;opacity:0;pointer-events:none}
+/* etichetele de deasupra bifelor la colaje */
+.c.l{flex-direction:column;gap:4px}
+.c.l small{font-size:10.5px;font-weight:700;color:var(--gold);line-height:1;white-space:nowrap}
+.c span{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--gold);background:var(--card);display:block;transition:all .12s}
+.c input:checked~span{background:var(--gold);box-shadow:inset 0 0 0 4px var(--card)}
+.c input:focus-visible~span{outline:2px solid var(--ink);outline-offset:2px}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:18px;cursor:pointer;margin:6px 0 12px}
+.chk input{width:22px;height:22px;accent-color:var(--gold);margin-top:2px;flex:none}
+.btn{display:block;margin:28px auto 0;background:var(--gold);color:#fff;border:0;border-radius:8px;font:inherit;font-weight:600;font-size:19px;padding:13px 30px;cursor:pointer}
+.btn:disabled{opacity:.6}
+.end{text-align:center}
+.end img{width:min(260px,60%);margin:22px auto 0;display:block}
+/* butonul zi / noapte, colț dreapta sus (26 nov) */
+/* soare ↔ lună: cât timp nu a fost apăsat, se schimbă singur între ele; după apăsare rămâne pe modul ales (26 nov) */
+.mod{overflow:hidden}
+.mod .i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .55s ease,opacity .55s ease}
+.mod .sun{opacity:1;transform:rotate(0) scale(1)}
+.mod .moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+html.night .mod .sun{opacity:0;transform:rotate(90deg) scale(.4)}
+html.night .mod .moon{opacity:1;transform:rotate(0) scale(1)}
+@keyframes sunIdle{0%,40%{opacity:1;transform:rotate(0) scale(1)}50%,90%{opacity:0;transform:rotate(90deg) scale(.4)}100%{opacity:1;transform:rotate(0) scale(1)}}
+@keyframes moonIdle{0%,40%{opacity:0;transform:rotate(-90deg) scale(.4)}50%,90%{opacity:1;transform:rotate(0) scale(1)}100%{opacity:0;transform:rotate(-90deg) scale(.4)}}
+@keyframes modGlow{0%,100%{box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 0 0 rgba(184,149,90,.45)}50%{box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 0 8px rgba(184,149,90,0)}}
+.mod.puls{animation:modGlow 2.6s ease-in-out infinite}
+.mod.puls .sun{animation:sunIdle 2s ease-in-out infinite}
+.mod.puls .moon{animation:moonIdle 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.mod.puls,.mod.puls .i{animation:none}}
+.mod{position:fixed;top:12px;right:12px;z-index:5;width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold);font-size:19px;line-height:38px;text-align:center;cursor:pointer;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.msg{text-align:center;margin-top:16px;font-weight:600}
+.req{color:var(--wine)}
+.bad{border-color:#B0243F!important;box-shadow:0 0 0 2px #F3D6DC}
+.msg.err{color:#B0243F}
+.hint{color:#B0243F;font-size:15px;font-weight:600;margin-top:4px}
+.ok{display:none;text-align:center;padding:60px 10px}
+.ok h2{text-align:center}
+.ok p{text-align:center}
+@media (max-width:420px){:root{--col:48px}body{font-size:17px}.grp .r.sub .n,.grp .gt .n{padding-left:10px}.h{font-size:11.5px}.n{font-size:15.5px;padding-left:10px}.c span{width:21px;height:21px}}
+@media (max-width:350px){:root{--col:44px}.h{font-size:11px}}
+</style>
+<style>
+.play{width:28px;height:28px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold);font-size:12px;cursor:pointer;margin-right:8px;vertical-align:middle;padding:0}
+.play.on{background:var(--gold);color:#fff}
+/* player jos, fix pe ecran: pagina se poate derula în continuare */
+.pl{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--gold);box-shadow:0 -4px 18px rgba(0,0,0,.15);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:none}
+.pl.on{display:block}
+.plr{display:flex;align-items:center;gap:10px;max-width:720px;margin:0 auto}
+.vid{width:96px;height:54px;flex:none;border-radius:6px;overflow:hidden;background:#000}
+.vid iframe{width:96px;height:54px;border:0;display:block}
+.mid{flex:1;min-width:0}
+.pt{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa{font-size:13px;color:var(--muted);margin-top:-2px}
+.bar{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:2px}
+.bar input{flex:1;accent-color:var(--gold)}
+.bt{width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:var(--gold);color:#fff;font-size:16px;cursor:pointer;flex:none}
+.cx{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--cream);color:var(--ink);font-size:15px;cursor:pointer;flex:none}
+body{padding-bottom:170px}
+.ctl{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:8px}
+.sk{min-width:62px;height:36px;border-radius:18px;border:1px solid var(--gold);background:var(--card);color:var(--gold);font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.bt{width:48px;height:48px;font-size:19px}
+</style></head><body><main class="wrap">
+<h1>Probă: player</h1><p class="desc" style="text-align:center;color:var(--muted);font-style:italic">Apăsați ▶ la primele două piese. Playerul stă jos pe ecran; puteți derula pagina, bifa, da înainte sau înapoi pe bară, opri cu ⏸ sau închide cu ✕.</p>
+<h3 class="gold">HIT-URI SLOW</h3><div class="t"><div class="r"><div class="n"><button type="button" class="play" data-v="450p7goxZqg" data-t="All of me" data-a="John Legend">▶</button><b>All of me</b> – John Legend</div><label class="c l"><input type="radio" name="All of me" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="All of me" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="All of me" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="All of me" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><button type="button" class="play" data-v="5vheNbQlsyU" data-t="Always remember us this way" data-a="Lady Gaga">▶</button><b>Always remember us this way</b> – Lady Gaga</div><label class="c l"><input type="radio" name="Always remember us this way" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="Always remember us this way" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="Always remember us this way" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="Always remember us this way" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 1</b> – artist</div><label class="c l"><input type="radio" name="x1" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x1" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x1" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x1" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 2</b> – artist</div><label class="c l"><input type="radio" name="x2" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x2" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x2" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x2" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 3</b> – artist</div><label class="c l"><input type="radio" name="x3" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x3" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x3" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x3" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 4</b> – artist</div><label class="c l"><input type="radio" name="x4" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x4" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x4" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x4" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 5</b> – artist</div><label class="c l"><input type="radio" name="x5" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x5" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x5" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x5" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 6</b> – artist</div><label class="c l"><input type="radio" name="x6" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x6" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x6" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x6" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 7</b> – artist</div><label class="c l"><input type="radio" name="x7" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x7" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x7" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x7" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 8</b> – artist</div><label class="c l"><input type="radio" name="x8" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x8" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x8" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x8" value="Nu"><small>Nu</small><span></span></label></div></div>
+</main>
+<div class="pl" id="pl"><div class="plr"><div class="vid"><div id="yt"></div></div>
+<div class="mid"><div class="pt" id="pt"></div><div class="pa" id="pa"></div>
+<div class="bar"><span id="cur">0:00</span><input type="range" id="sk" min="0" max="100" step="1" value="0"><span id="dur">0:00</span></div></div>
+<button class="cx" id="cx" aria-label="Închide">✕</button></div>
+<div class="ctl"><button class="sk" id="bk" aria-label="Înapoi 30 de secunde">↺ 30</button><button class="bt" id="pp" aria-label="Pauză">⏸</button><button class="sk" id="fw" aria-label="Înainte 30 de secunde">30 ↻</button></div></div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+let P=null,ready=false,want=null,drag=false,curBtn=null;
+const $=id=>document.getElementById(id),fm=s=>{s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function onYouTubeIframeAPIReady(){P=new YT.Player('yt',{width:96,height:54,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},events:{onReady:()=>{ready=true;if(want)load(want)},onStateChange:e=>{$('pp').textContent=e.data===1?'⏸':'▶'}}})}
+function load(b){want=b;if(!ready)return;P.loadVideoById(b.dataset.v);$('pt').textContent=b.dataset.t;$('pa').textContent=b.dataset.a;$('pl').classList.add('on');if(curBtn)curBtn.classList.remove('on');curBtn=b;b.classList.add('on')}
+document.querySelectorAll('.play').forEach(b=>b.onclick=()=>load(b));
+$('pp').onclick=()=>{if(!P)return;P.getPlayerState()===1?P.pauseVideo():P.playVideo()};
+$('bk').onclick=()=>{if(P)P.seekTo(Math.max(0,P.getCurrentTime()-30),true)};
+$('fw').onclick=()=>{if(P)P.seekTo(Math.min(P.getDuration()||0,P.getCurrentTime()+30),true)};
+$('cx').onclick=()=>{if(P)P.stopVideo();$('pl').classList.remove('on');if(curBtn)curBtn.classList.remove('on');curBtn=null};
+$('sk').oninput=()=>{drag=true;$('cur').textContent=fm($('sk').value)};
+$('sk').onchange=()=>{if(P)P.seekTo(+$('sk').value,true);drag=false};
+setInterval(()=>{if(!P||!ready||!$('pl').classList.contains('on'))return;const d=P.getDuration()||0,c=P.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('dur').textContent=fm(d)},500);
+</script></body></html>
