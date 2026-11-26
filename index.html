@@ -238,7 +238,7 @@ html.night .mod .moon{opacity:1;transform:rotate(0) scale(1)}
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbyLMHlvhe2umHED01Tk1CX4pBtk_TB0Vf95L7M0S6GG4d_E1um2wzZ71AGPrI95Xw/exec";
 // zi / noapte: apăsat = schimbă și ține minte pe telefonul acesta
 const modBtn=document.getElementById('mod');function modIcon(){}
-try{if(localStorage.getItem('nob-mod'))modBtn.classList.remove('puls')}catch(e){}
+
 modBtn.addEventListener('click',()=>{modBtn.classList.remove('puls');const n=document.documentElement.classList.toggle('night');try{localStorage.setItem('nob-mod',n?'noapte':'zi')}catch(e){}modIcon()});
 const KEY = 'nob-playlist-ciorna';
 const f = document.getElementById('f');
