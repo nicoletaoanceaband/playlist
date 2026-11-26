@@ -113,8 +113,8 @@ html.night .mod .moon{opacity:1;transform:rotate(0) scale(1)}
 @keyframes moonIdle{0%,40%{opacity:0;transform:rotate(-90deg) scale(.4)}50%,90%{opacity:1;transform:rotate(0) scale(1)}100%{opacity:0;transform:rotate(-90deg) scale(.4)}}
 @keyframes modGlow{0%,100%{box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 0 0 rgba(184,149,90,.45)}50%{box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 0 8px rgba(184,149,90,0)}}
 .mod.puls{animation:modGlow 2.6s ease-in-out infinite}
-.mod.puls .sun{animation:sunIdle 4s ease-in-out infinite}
-.mod.puls .moon{animation:moonIdle 4s ease-in-out infinite}
+.mod.puls .sun{animation:sunIdle 2s ease-in-out infinite}
+.mod.puls .moon{animation:moonIdle 2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.mod.puls,.mod.puls .i{animation:none}}
 .mod{position:fixed;top:12px;right:12px;z-index:5;width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold);font-size:19px;line-height:38px;text-align:center;cursor:pointer;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .msg{text-align:center;margin-top:16px;font-weight:600}
