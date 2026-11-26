@@ -330,7 +330,7 @@ function warm(id){if(PL.has(id)||PL.size>=MAXP&&!evict())return;const [slot,d]=s
 function evict(){for(const [k,o] of PL){if(o!==curP&&!VIS.has(k)){try{o.p.destroy()}catch(e){}o.slot.remove();PL.delete(k);return true}}return false}
 function onYouTubeIframeAPIReady(){ytReady=true;mainP=mkMain();
   const io=new IntersectionObserver(es=>{es.forEach(en=>{const id=en.target.dataset.v;if(en.isIntersecting)VIS.add(id);else VIS.delete(id)});
-    clearTimeout(window.__wt);window.__wt=setTimeout(()=>{const n=nearest().slice(0,MAXP);for(const [k] of PL){if(!n.includes(k)&&PL.get(k)!==curP){VIS.delete(k)}}n.forEach(warm)},350)},{rootMargin:'0px'});
+    clearTimeout(window.__wt);window.__wt=setTimeout(()=>{const n=nearest().slice(0,MAXP);VIS.clear();n.forEach(k=>VIS.add(k));n.forEach(warm)},350)},{rootMargin:'0px'});
   document.querySelectorAll('.play').forEach(b=>io.observe(b))}
 function show(o){[...PL.values(),mainP].forEach(x=>x&&x.slot.classList.toggle('on',x===o))}
 function playB(b){const id=b.dataset.v;
@@ -343,8 +343,6 @@ function playB(b){const id=b.dataset.v;
   curP=mainP;show(mainP);if(mainP.id!==id){mainP.id=id;mainP.p.loadVideoById(id)}else mainP.p.playVideo()}
 // prioritate la încălzire: piesele cele mai apropiate de mijlocul ecranului
 function nearest(){const c=innerHeight/2;return [...document.querySelectorAll('.play')].map(b=>{const r=b.getBoundingClientRect();return [Math.abs(r.top-c),b.dataset.v]}).filter(x=>x[0]<innerHeight).sort((a,b)=>a[0]-b[0]).map(x=>x[1])}
-// la atingere (înainte de ridicarea degetului) pregătesc deja piesa în playerul principal
-document.querySelectorAll('.play').forEach(b=>b.addEventListener('pointerdown',()=>{const id=b.dataset.v,w=PL.get(id);if(w&&w.warm)return;if(mainP&&mainP.ready&&mainP.id!==id){mainP.id=id;mainP.cued=true;mainP.p.cueVideoById(id)}},{passive:true}));
 document.querySelectorAll('.play').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();playB(b)}));
 $p('pp').onclick=()=>{if(!curP||!curP.ready)return;curP.p.getPlayerState()===1?curP.p.pauseVideo():curP.p.playVideo()};
 $p('bk').onclick=()=>{if(curP&&curP.ready)curP.p.seekTo(Math.max(0,curP.p.getCurrentTime()-30),true)};
