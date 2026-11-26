@@ -102,6 +102,9 @@ textarea{min-height:110px;resize:vertical}
 .end{text-align:center}
 .end img{width:min(260px,60%);margin:22px auto 0;display:block}
 /* butonul zi / noapte, colț dreapta sus (26 nov) */
+@keyframes modPuls{0%,100%{transform:scale(1);box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 0 0 rgba(184,149,90,.45)}50%{transform:scale(1.13);box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 0 9px rgba(184,149,90,0)}}
+.mod.puls{animation:modPuls 2.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.mod.puls{animation:none}}
 .mod{position:fixed;top:12px;right:12px;z-index:5;width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold);font-size:19px;line-height:38px;text-align:center;cursor:pointer;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .msg{text-align:center;margin-top:16px;font-weight:600}
 .req{color:var(--wine)}
@@ -116,7 +119,7 @@ textarea{min-height:110px;resize:vertical}
 </style>
 </head>
 <body>
-<button type="button" class="mod" id="mod" aria-label="Zi / noapte"></button>
+<button type="button" class="mod puls" id="mod" aria-label="Zi / noapte" title="Zi / noapte"></button>
 <main class="wrap" id="form-wrap">
 <img class="logo" src="logo.png" alt="Nicoleta Oancea & Band">
 <h1>Playlistul nunții voastre</h1>
@@ -224,7 +227,8 @@ textarea{min-height:110px;resize:vertical}
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbyLMHlvhe2umHED01Tk1CX4pBtk_TB0Vf95L7M0S6GG4d_E1um2wzZ71AGPrI95Xw/exec";
 // zi / noapte: apăsat = schimbă și ține minte pe telefonul acesta
 const modBtn=document.getElementById('mod');function modIcon(){modBtn.textContent=document.documentElement.classList.contains('night')?'☀':'☾'}modIcon();
-modBtn.addEventListener('click',()=>{const n=document.documentElement.classList.toggle('night');try{localStorage.setItem('nob-mod',n?'noapte':'zi')}catch(e){}modIcon()});
+try{if(localStorage.getItem('nob-mod'))modBtn.classList.remove('puls')}catch(e){}
+modBtn.addEventListener('click',()=>{modBtn.classList.remove('puls');const n=document.documentElement.classList.toggle('night');try{localStorage.setItem('nob-mod',n?'noapte':'zi')}catch(e){}modIcon()});
 const KEY = 'nob-playlist-ciorna';
 const f = document.getElementById('f');
 // rândul bifat se colorează ușor
