@@ -125,7 +125,10 @@ html.night .mod .moon{opacity:1;transform:rotate(0) scale(1)}
 .pt{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pa{font-size:13px;color:var(--muted);margin-top:-2px}
 .bar{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:2px}
-.bar input{flex:1;accent-color:var(--gold)}
+.bar input{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;outline:none;background:linear-gradient(to right,var(--gold) 0,var(--gold) var(--p,0%),#141210 var(--p,0%),#141210 100%)}
+.bar input::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold);border:0;box-shadow:0 0 0 2px var(--card)}
+.bar input::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--gold);border:0}
+.bar input::-moz-range-track{height:5px;background:transparent}
 .bt{width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:var(--gold);color:#fff;font-size:16px;cursor:pointer;flex:none}
 .cx{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--cream);color:var(--ink);font-size:15px;cursor:pointer;flex:none}
 body{padding-bottom:170px}
@@ -163,7 +166,7 @@ $('pp').onclick=()=>{if(!cur)return;cur.p.getPlayerState()===1?cur.p.pauseVideo(
 $('bk').onclick=()=>{if(cur)cur.p.seekTo(Math.max(0,cur.p.getCurrentTime()-30),true)};
 $('fw').onclick=()=>{if(cur)cur.p.seekTo(Math.min(cur.p.getDuration()||0,cur.p.getCurrentTime()+30),true)};
 $('cx').onclick=()=>{if(cur){cur.p.pauseVideo();cur.slot.classList.remove('on');cur.b.classList.remove('on')}cur=null;$('pl').classList.remove('on')};
-$('sk').oninput=()=>{drag=true;$('cur').textContent=fm($('sk').value)};
+$('sk').oninput=()=>{drag=true;$('cur').textContent=fm($('sk').value);const m=+$('sk').max||1;$('sk').style.setProperty('--p',(+$('sk').value/m*100)+'%')};
 $('sk').onchange=()=>{if(cur)cur.p.seekTo(+$('sk').value,true);drag=false};
-setInterval(()=>{if(!cur||!$('pl').classList.contains('on'))return;const d=cur.p.getDuration()||0,c=cur.p.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('dur').textContent=fm(d)},250);
+setInterval(()=>{if(!cur||!$('pl').classList.contains('on'))return;const d=cur.p.getDuration()||0,c=cur.p.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('sk').style.setProperty('--p',(d?Math.min(100,(+$('sk').value)/d*100):0)+'%');$('dur').textContent=fm(d)},250);
 </script></body></html>
