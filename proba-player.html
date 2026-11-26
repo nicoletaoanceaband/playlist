@@ -117,6 +117,9 @@ html.night .mod .moon{opacity:1;transform:rotate(0) scale(1)}
 .pl.on{display:block}
 .plr{display:flex;align-items:center;gap:10px;max-width:720px;margin:0 auto}
 .vid{width:96px;height:54px;flex:none;border-radius:6px;overflow:hidden;background:#000}
+.vid{position:relative}
+.vid .slot{position:absolute;inset:0;opacity:0;pointer-events:none}
+.vid .slot.on{opacity:1}
 .vid iframe{width:96px;height:54px;border:0;display:block}
 .mid{flex:1;min-width:0}
 .pt{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -133,31 +136,32 @@ body{padding-bottom:170px}
 <h1>Probă: player</h1><p class="desc" style="text-align:center;color:var(--muted);font-style:italic">Apăsați ▶ la primele două piese. Playerul stă jos pe ecran; puteți derula pagina, bifa, da înainte sau înapoi pe bară, opri cu ⏸ sau închide cu ✕.</p>
 <h3 class="gold">HIT-URI SLOW</h3><div class="t"><div class="r"><div class="n"><button type="button" class="play" data-v="450p7goxZqg" data-t="All of me" data-a="John Legend">▶</button><b>All of me</b> – John Legend</div><label class="c l"><input type="radio" name="All of me" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="All of me" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="All of me" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="All of me" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><button type="button" class="play" data-v="5vheNbQlsyU" data-t="Always remember us this way" data-a="Lady Gaga">▶</button><b>Always remember us this way</b> – Lady Gaga</div><label class="c l"><input type="radio" name="Always remember us this way" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="Always remember us this way" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="Always remember us this way" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="Always remember us this way" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 1</b> – artist</div><label class="c l"><input type="radio" name="x1" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x1" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x1" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x1" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 2</b> – artist</div><label class="c l"><input type="radio" name="x2" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x2" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x2" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x2" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 3</b> – artist</div><label class="c l"><input type="radio" name="x3" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x3" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x3" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x3" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 4</b> – artist</div><label class="c l"><input type="radio" name="x4" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x4" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x4" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x4" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 5</b> – artist</div><label class="c l"><input type="radio" name="x5" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x5" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x5" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x5" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 6</b> – artist</div><label class="c l"><input type="radio" name="x6" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x6" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x6" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x6" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 7</b> – artist</div><label class="c l"><input type="radio" name="x7" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x7" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x7" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x7" value="Nu"><small>Nu</small><span></span></label></div><div class="r"><div class="n"><b>Piesă exemplu 8</b> – artist</div><label class="c l"><input type="radio" name="x8" value="Da"><small>Da</small><span></span></label><label class="c l"><input type="radio" name="x8" value="Neapărat"><small>Neapărat</small><span></span></label><label class="c l"><input type="radio" name="x8" value="Neutru"><small>Neutru</small><span></span></label><label class="c l"><input type="radio" name="x8" value="Nu"><small>Nu</small><span></span></label></div></div>
 </main>
-<div class="pl" id="pl"><div class="plr"><div class="vid"><div id="yt"></div></div>
+<div class="pl" id="pl"><div class="plr"><div class="vid" id="vids"></div>
 <div class="mid"><div class="pt" id="pt"></div><div class="pa" id="pa"></div>
 <div class="bar"><span id="cur">0:00</span><input type="range" id="sk" min="0" max="100" step="1" value="0"><span id="dur">0:00</span></div></div>
 <button class="cx" id="cx" aria-label="Închide">✕</button></div>
 <div class="ctl"><button class="sk" id="bk" aria-label="Înapoi 30 de secunde">↺ 30</button><button class="bt" id="pp" aria-label="Pauză">⏸</button><button class="sk" id="fw" aria-label="Înainte 30 de secunde">30 ↻</button></div></div>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-// fără lag: playerul se pregătește dinainte (cue), iar bara apare imediat la apăsare (26 nov)
-let P=null,ready=false,cued=null,pending=null,drag=false,curBtn=null;
+// pornire instant: fiecare piesă are playerul ei, pregătit din timp (pornit pe mut o clipă și oprit la 0), ca la apăsare să cânte imediat (26 nov)
 const $=id=>document.getElementById(id),fm=s=>{s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
-const btns=[...document.querySelectorAll('.play')];
-function onYouTubeIframeAPIReady(){P=new YT.Player('yt',{width:96,height:54,videoId:btns[0].dataset.v,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},events:{onReady:()=>{ready=true;cued=btns[0].dataset.v;if(pending)play(pending)},onStateChange:e=>{$('pp').textContent=e.data===1?'⏸':'▶';if(e.data===1)$('pa').textContent=curBtn?curBtn.dataset.a:''}}})}
-function cue(b){if(ready&&cued!==b.dataset.v){P.cueVideoById(b.dataset.v);cued=b.dataset.v}}
-function play(b){
-  $('pt').textContent=b.dataset.t;$('pa').textContent='Se încarcă…';$('pl').classList.add('on');
-  if(curBtn)curBtn.classList.remove('on');curBtn=b;b.classList.add('on');
-  if(!ready){pending=b;return}
-  if(cued!==b.dataset.v){P.loadVideoById(b.dataset.v);cued=b.dataset.v}else P.playVideo();
-}
-btns.forEach(b=>{b.addEventListener('pointerdown',()=>cue(b));b.addEventListener('mouseenter',()=>cue(b));b.onclick=()=>play(b)});
-$('pp').onclick=()=>{if(!P)return;P.getPlayerState()===1?P.pauseVideo():P.playVideo()};
-$('bk').onclick=()=>{if(P)P.seekTo(Math.max(0,P.getCurrentTime()-30),true)};
-$('fw').onclick=()=>{if(P)P.seekTo(Math.min(P.getDuration()||0,P.getCurrentTime()+30),true)};
-$('cx').onclick=()=>{if(P)P.pauseVideo();$('pl').classList.remove('on');if(curBtn)curBtn.classList.remove('on');curBtn=null};
+const btns=[...document.querySelectorAll('.play')],PL={};let cur=null,drag=false;
+function onYouTubeIframeAPIReady(){btns.forEach((b,k)=>{const slot=document.createElement('div');slot.className='slot';const d=document.createElement('div');slot.appendChild(d);$('vids').appendChild(slot);
+  const o={b,slot,ready:false,warm:false};PL[b.dataset.v]=o;
+  o.p=new YT.Player(d,{width:96,height:54,videoId:b.dataset.v,host:'https://www.youtube-nocookie.com',playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1},
+    events:{onReady:()=>{o.ready=true;o.p.mute();o.p.playVideo()},
+      onStateChange:e=>{if(!o.warm&&e.data===1){o.warm=true;if(cur!==o){o.p.pauseVideo();o.p.seekTo(0,true)}o.p.unMute()}
+        if(cur===o)$('pp').textContent=e.data===1?'⏸':'▶';if(cur===o&&e.data===1)$('pa').textContent=b.dataset.a}}})})}
+function play(b){const o=PL[b.dataset.v];if(!o)return;
+  if(cur&&cur!==o){cur.p.pauseVideo();cur.slot.classList.remove('on');cur.b.classList.remove('on')}
+  cur=o;o.slot.classList.add('on');b.classList.add('on');$('pt').textContent=b.dataset.t;$('pa').textContent=o.warm?b.dataset.a:'Se încarcă…';$('pl').classList.add('on');
+  o.p.unMute();o.p.playVideo()}
+btns.forEach(b=>b.onclick=()=>play(b));
+$('pp').onclick=()=>{if(!cur)return;cur.p.getPlayerState()===1?cur.p.pauseVideo():cur.p.playVideo()};
+$('bk').onclick=()=>{if(cur)cur.p.seekTo(Math.max(0,cur.p.getCurrentTime()-30),true)};
+$('fw').onclick=()=>{if(cur)cur.p.seekTo(Math.min(cur.p.getDuration()||0,cur.p.getCurrentTime()+30),true)};
+$('cx').onclick=()=>{if(cur){cur.p.pauseVideo();cur.slot.classList.remove('on');cur.b.classList.remove('on')}cur=null;$('pl').classList.remove('on')};
 $('sk').oninput=()=>{drag=true;$('cur').textContent=fm($('sk').value)};
-$('sk').onchange=()=>{if(P)P.seekTo(+$('sk').value,true);drag=false};
-setInterval(()=>{if(!P||!ready||!$('pl').classList.contains('on'))return;const d=P.getDuration()||0,c=P.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('dur').textContent=fm(d)},300);
+$('sk').onchange=()=>{if(cur)cur.p.seekTo(+$('sk').value,true);drag=false};
+setInterval(()=>{if(!cur||!$('pl').classList.contains('on'))return;const d=cur.p.getDuration()||0,c=cur.p.getCurrentTime()||0;$('sk').max=Math.floor(d);if(!drag){$('sk').value=Math.floor(c);$('cur').textContent=fm(c)}$('dur').textContent=fm(d)},250);
 </script></body></html>
